@@ -1,14 +1,17 @@
-package com.example.UTN.ui.main;
+package com.example.UTN.src.Activities.main;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.UTN.R;
+import com.example.UTN.src.Activities.tabs.AddTab;
+import com.example.UTN.src.Activities.tabs.ListTab;
+import com.example.UTN.src.Activities.tabs.UpdateTab;
+import com.example.UTN.src.Interfaces.TabInterface;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -16,8 +19,11 @@ import com.example.UTN.R;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
+    private static final TabInterface[] APP_COMPAT_ACTIVITIES = new TabInterface[]{
+            AddTab.newInstance(),
+            UpdateTab.newInstance(),
+            ListTab.newInstance()
+    };
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -25,22 +31,20 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         mContext = context;
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+        return (Fragment) APP_COMPAT_ACTIVITIES[position];
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
+        return mContext.getResources().getString(APP_COMPAT_ACTIVITIES[position].getTabName());
     }
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
-        return 2;
+        return APP_COMPAT_ACTIVITIES.length;
     }
 }

@@ -1,5 +1,16 @@
 <resources>
-    <string name="app_name">UTN_PAII_TP4</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="app_name">TP4</string>
+
+    <string name="tab_text_add">Alta</string>
+    <string name="tab_text_update">Modificación</string>
+    <string name="tab_text_list">Listado</string>
+
+    <string name="text_id">ID</string>
+    <string name="text_product_name">Nombre de producto</string>
+    <string name="text_stock">Stock</string>
+    <string name="text_category">Categoría</string>
+    <string name="text_empty_category">Seleccione una categoría</string>
+    <string name="text_add">Agregar</string>
+    <string name="text_update">Modificar</string>
+    <string name="text_search">Buscar</string>
 </resources>
