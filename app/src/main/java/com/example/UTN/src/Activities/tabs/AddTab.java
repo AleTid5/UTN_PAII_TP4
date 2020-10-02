@@ -37,7 +37,6 @@ public class AddTab extends Fragment implements TabInterface {
         View root = inflater.inflate(R.layout.add_tab_fragment, container, false);
 
         Button buttonAdd = root.findViewById(R.id.button_add);
-
         buttonAdd.setOnClickListener(this::onAddProduct);
 
         return root;
@@ -57,7 +56,7 @@ public class AddTab extends Fragment implements TabInterface {
         return R.string.tab_text_add;
     }
 
-    public void onAddProduct(View view) {
+    private void onAddProduct(View view) {
         try {
             mViewModel.addProduct(new ProductBuilder()
                     .setId(requireView().findViewById(R.id.input_id))

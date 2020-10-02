@@ -6,11 +6,8 @@ public class Category {
     private Integer id;
     private String description;
 
-    public Category(Integer id) {
+    public Category(Integer id, String description) {
         this.id = id;
-    }
-
-    public Category(String description) {
         this.description = description;
     }
 

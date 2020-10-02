@@ -7,6 +7,10 @@ import java.util.List;
 
 public abstract class CategoryService {
     public static List<Category> findCategories() {
-        return Arrays.asList(new Category("Categoria 1"), new Category("Categoria 2"), new Category("Categoria 3"));
+        return Arrays.asList(
+                new Category(0, "Seleccione una categoria"),
+                new Category(1, "Categoria 1"),
+                new Category(2, "Categoria 2"),
+                new Category(3, "Categoria 3"));
     }
 }

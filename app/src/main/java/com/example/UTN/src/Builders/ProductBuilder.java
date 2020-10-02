@@ -4,6 +4,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.UTN.src.Exceptions.ProductException;
+import com.example.UTN.src.Models.Category;
 import com.example.UTN.src.Models.Product;
 
 public class ProductBuilder {
@@ -11,6 +12,10 @@ public class ProductBuilder {
 
     public ProductBuilder() {
         this.product = new Product();
+    }
+
+    public ProductBuilder(Integer id) {
+        this.product = new Product(id);
     }
 
     public ProductBuilder setId(TextView inputId) throws ProductException {
@@ -26,9 +31,9 @@ public class ProductBuilder {
     }
 
     public ProductBuilder setName(TextView inputName) throws ProductException {
-        String name = inputName.getText().toString();
+        String name = inputName.getText().toString().trim();
 
-        if (!name.chars().allMatch(Character::isLetter)) {
+        if (!name.replace(" ", "").chars().allMatch(Character::isLetter)) {
             throw new ProductException("El Nombre solo puede contener letras");
         }
 
@@ -53,8 +58,15 @@ public class ProductBuilder {
         return this;
     }
 
-    public ProductBuilder setCategory(Spinner spinnerCategory) {
-        System.out.println(spinnerCategory);
+    public ProductBuilder setCategory(Spinner spinnerCategory) throws ProductException {
+        Category category = (Category) spinnerCategory.getSelectedItem();
+
+        if (category.getId().equals(0)) {
+            throw new ProductException("Debe seleccionar una categoría válida");
+        }
+
+        product.setCategory(category);
+
         return this;
     }
 

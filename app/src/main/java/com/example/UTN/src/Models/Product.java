@@ -8,8 +8,12 @@ public class Product {
 
     public Product() {}
     
-    public Product(Integer id, String name, Integer stock, Category category) {
+    public Product(Integer id) {
         this.id = id;
+    }
+
+    public Product(Integer id, String name, Integer stock, Category category) {
+        this(id);
         this.name = name;
         this.stock = stock;
         this.category = category;
