@@ -97,6 +97,10 @@ public class UpdateTab extends Fragment implements TabInterface {
                     .build()
             );
 
+            ((TextView) requireView().findViewById(R.id.input_product_name)).setText("");
+            ((TextView) requireView().findViewById(R.id.input_stock)).setText("");
+            ((Spinner) requireView().findViewById(R.id.spinner_category)).setSelection(0, true);
+
             Snackbar.make(view, "El producto ha sido modificado exitosamente!", Snackbar.LENGTH_LONG).show();
         } catch (ProductException e) {
             Snackbar.make(view, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_LONG).show();

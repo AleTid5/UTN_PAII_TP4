@@ -1,5 +1,6 @@
 package com.example.UTN.src.Activities.tabs;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.UTN.src.Activities.tabs.view_models.AddTabViewModel;
 import com.example.UTN.src.Builders.ProductBuilder;
 import com.example.UTN.src.Exceptions.ProductException;
 import com.example.UTN.src.Interfaces.TabInterface;
+import com.example.UTN.src.Models.Product;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
@@ -56,15 +58,22 @@ public class AddTab extends Fragment implements TabInterface {
         return R.string.tab_text_add;
     }
 
+    @SuppressLint("SetTextI18n")
     private void onAddProduct(View view) {
         try {
-            mViewModel.addProduct(new ProductBuilder()
+            Product product = new ProductBuilder()
                     .setId(requireView().findViewById(R.id.input_id))
                     .setName(requireView().findViewById(R.id.input_product_name))
                     .setStock(requireView().findViewById(R.id.input_stock))
                     .setCategory(requireView().findViewById(R.id.spinner_category))
-                    .build()
-            );
+                    .build();
+
+            mViewModel.addProduct(product);
+
+            ((TextView) requireView().findViewById(R.id.input_id)).setText("");
+            ((TextView) requireView().findViewById(R.id.input_product_name)).setText("");
+            ((TextView) requireView().findViewById(R.id.input_stock)).setText("");
+            ((Spinner) requireView().findViewById(R.id.spinner_category)).setSelection(0, true);
 
             Snackbar.make(view, "El producto ha sido agregado exitosamente!", Snackbar.LENGTH_LONG).show();
         } catch (ProductException e) {
