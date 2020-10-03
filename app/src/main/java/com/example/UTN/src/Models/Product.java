@@ -5,6 +5,7 @@ public class Product {
     private String name;
     private Integer stock;
     private Category category;
+    private Boolean isActive = true;
 
     public Product() {}
     
@@ -49,5 +50,13 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Boolean isActive() {
+        return this.isActive;
+    }
+
+    public void disable() {
+        this.isActive = false;
     }
 }

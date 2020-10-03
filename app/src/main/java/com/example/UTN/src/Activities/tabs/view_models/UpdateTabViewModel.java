@@ -11,5 +11,6 @@ public class UpdateTabViewModel extends WithCategoryViewModel {
 
     public void updateProduct(Product product) {
         ProductService.updateProduct(product);
+        ListTabViewModel.updateProduct(product);
     }
 }
