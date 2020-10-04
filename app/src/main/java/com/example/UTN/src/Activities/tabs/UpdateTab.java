@@ -20,7 +20,6 @@ import com.example.UTN.src.Activities.tabs.view_models.UpdateTabViewModel;
 import com.example.UTN.src.Builders.ProductBuilder;
 import com.example.UTN.src.Exceptions.ProductException;
 import com.example.UTN.src.Interfaces.TabInterface;
-import com.example.UTN.src.Models.Product;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
