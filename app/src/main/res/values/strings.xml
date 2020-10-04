@@ -11,8 +11,10 @@
     <string name="text_category">Categoría</string>
     <string name="text_empty_category">Seleccione una categoría</string>
     <string name="text_add">Agregar</string>
+    <string name="text_saving">Guardando</string>
     <string name="text_update">Modificar</string>
     <string name="text_search">Buscar</string>
+    <string name="text_searching">Buscando</string>
     <string name="text_remove">Eliminar</string>
     <string name="text_see_more">Ver más</string>
     <string name="text_accept">Aceptar</string>

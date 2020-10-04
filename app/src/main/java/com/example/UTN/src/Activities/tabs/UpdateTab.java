@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -61,9 +62,10 @@ public class UpdateTab extends Fragment implements TabInterface {
             } catch (ProductException e) {
                 Snackbar.make(root, e.getMessage(), Snackbar.LENGTH_LONG).show();
             } catch (Exception e) {
-                Snackbar.make(root, "Debe ingresar un ID válido", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(root, "El ID ingresado no pertenece a ningún producto.", Snackbar.LENGTH_LONG).show();
                 e.printStackTrace();
             } finally {
+                setLoader(root, true);
                 setIsEditable(root);
             }
         });
@@ -86,14 +88,18 @@ public class UpdateTab extends Fragment implements TabInterface {
 
     private void onSearchProduct(View view) {
         try {
+            isEditable = false;
             this.selectedId = null;
 
             // Establece el Id para ser utilizado mas tarde
             this.selectedId = Integer.parseInt(((TextView) view.findViewById(R.id.input_id)).getText().toString());
 
             mViewModel.findProduct(this.selectedId);
+            setLoader(view, false);
         } catch (Exception e) {
             Snackbar.make(view, "Debe ingresar un ID válido", Snackbar.LENGTH_LONG).show();
+        } finally {
+            setIsEditable(view);
         }
     }
 
@@ -123,5 +129,15 @@ public class UpdateTab extends Fragment implements TabInterface {
         view.findViewById(R.id.input_stock).setEnabled(isEditable);
         view.findViewById(R.id.spinner_category).setEnabled(isEditable);
         view.findViewById(R.id.button_update).setEnabled(isEditable);
+    }
+
+    private void setLoader(View view, Boolean isEditable) {
+        ((TextView) view.findViewById(R.id.input_id)).setEnabled(isEditable);
+
+        if (isEditable) {
+            ((Button) view.findViewById(R.id.button_search)).setText(R.string.text_search);
+        } else {
+            ((Button) view.findViewById(R.id.button_search)).setText(R.string.text_searching);
+        }
     }
 }

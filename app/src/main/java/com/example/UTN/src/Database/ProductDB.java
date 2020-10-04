@@ -3,9 +3,9 @@ package com.example.UTN.src.Database;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.example.UTN.src.Activities.tabs.view_models.AddTabViewModel;
 import com.example.UTN.src.Activities.tabs.view_models.ListTabViewModel;
 import com.example.UTN.src.Activities.tabs.view_models.UpdateTabViewModel;
-import com.example.UTN.src.Exceptions.ProductException;
 import com.example.UTN.src.Models.Category;
 import com.example.UTN.src.Models.Product;
 
@@ -31,47 +31,47 @@ public abstract class ProductDB {
                 preparedStmt.setInt(4, product.getCategory().getId());
                 preparedStmt.execute();
 
-                new Handler(Looper.getMainLooper()).post(() -> ListTabViewModel.addProduct(product));
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    ListTabViewModel.addProduct(product);
+                    AddTabViewModel.productAdded(true);
+                });
             } catch (Exception e) {
-                e.printStackTrace();
+                new Handler(Looper.getMainLooper()).post(() -> AddTabViewModel.productAdded(false));
             }
         });
-
-        try {
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     public static void updateProduct(Product product) {
-        try {
-            String query = "UPDATE articulo SET nombre = ?, stock = ?, idCategoria = ? WHERE id = ?;";
+        Executors.newFixedThreadPool(1).submit(() -> {
+            try {
+                String query = "UPDATE articulo SET nombre = ?, stock = ?, idCategoria = ? WHERE id = ?;";
 
-            Connection connection = DatabaseManager.getConnection();
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setString(1, product.getName());
-            preparedStmt.setInt(2, product.getStock());
-            preparedStmt.setInt(3, product.getCategory().getId());
-            preparedStmt.setInt(4, product.getId());
-            preparedStmt.execute();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement preparedStmt = connection.prepareStatement(query);
+                preparedStmt.setString(1, product.getName());
+                preparedStmt.setInt(2, product.getStock());
+                preparedStmt.setInt(3, product.getCategory().getId());
+                preparedStmt.setInt(4, product.getId());
+                preparedStmt.execute();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        });
     }
 
     public static void removeProduct(Product product) {
-        try {
-            String query = "UPDATE articulo SET status = ? WHERE id = ?;";
+        Executors.newFixedThreadPool(1).submit(() -> {
+            try {
+                String query = "UPDATE articulo SET status = FALSE WHERE id = ?;";
 
-            Connection connection = DatabaseManager.getConnection();
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setString(1, product.getName());
-            preparedStmt.setInt(2, product.getId());
-            preparedStmt.execute();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+                Connection connection = DatabaseManager.getConnection();
+                PreparedStatement preparedStmt = connection.prepareStatement(query);
+                preparedStmt.setInt(1, product.getId());
+                preparedStmt.execute();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        });
     }
 
     public static void findProducts() {
@@ -82,7 +82,8 @@ public abstract class ProductDB {
                 String query = "SELECT A.id, A.nombre, A.stock, A.idcategoria, C.descripcion " +
                         "FROM articulo A " +
                         "INNER JOIN categoria C ON A.idcategoria = C.id " +
-                        "WHERE A.status = TRUE;";
+                        "WHERE A.status = TRUE " +
+                        "ORDER BY A.id";
 
                 Connection connection = DatabaseManager.getConnection();
                 Statement statement = connection.createStatement();

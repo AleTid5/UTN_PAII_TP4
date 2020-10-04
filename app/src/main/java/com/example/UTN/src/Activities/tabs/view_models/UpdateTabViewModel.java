@@ -9,16 +9,11 @@ import com.example.UTN.src.Services.ProductService;
 public class UpdateTabViewModel extends WithCategoryViewModel {
     private static MutableLiveData<Product> liveProduct = new MutableLiveData<>();
 
-    public UpdateTabViewModel() {
-        liveProduct.setValue(new Product());
-    }
-
     public LiveData<Product> getProduct() {
         return liveProduct;
     }
 
     public void findProduct(Integer id) {
-        liveProduct.setValue(null);
         ProductService.findProduct(id);
     }
 

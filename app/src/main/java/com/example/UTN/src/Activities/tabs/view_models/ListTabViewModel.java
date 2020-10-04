@@ -34,8 +34,10 @@ public class ListTabViewModel extends ViewModel {
     }
 
     public static void addProduct(Product product) {
-        Objects.requireNonNull(liveProductList.getValue()).add(product);
-        liveProductList.postValue(liveProductList.getValue());
+        try {
+            Objects.requireNonNull(liveProductList.getValue()).add(product);
+            liveProductList.postValue(liveProductList.getValue());
+        } catch (Exception ignored) {}
     }
 
     public static void updateProduct(Product product) {
