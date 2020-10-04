@@ -56,7 +56,7 @@ public class Product {
         return this.isActive;
     }
 
-    public void disable() {
-        this.isActive = false;
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 }

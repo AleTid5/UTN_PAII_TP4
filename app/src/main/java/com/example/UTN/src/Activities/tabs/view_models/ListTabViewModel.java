@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.UTN.src.Models.Product;
 import com.example.UTN.src.Services.ProductService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -15,7 +16,8 @@ public class ListTabViewModel extends ViewModel {
     private static MutableLiveData<List<Product>> liveProductList = new MutableLiveData<>();
 
     public ListTabViewModel() {
-        liveProductList.setValue(ProductService.findProducts());
+        liveProductList.setValue(new ArrayList<>());
+        ProductService.findProducts();
     }
 
     public void removeProduct(Product product) {

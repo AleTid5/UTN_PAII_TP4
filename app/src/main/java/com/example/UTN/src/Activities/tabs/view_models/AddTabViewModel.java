@@ -6,6 +6,5 @@ import com.example.UTN.src.Services.ProductService;
 public class AddTabViewModel extends WithCategoryViewModel {
     public void addProduct(Product product) {
         ProductService.saveProduct(product);
-        ListTabViewModel.addProduct(product);
     }
 }
