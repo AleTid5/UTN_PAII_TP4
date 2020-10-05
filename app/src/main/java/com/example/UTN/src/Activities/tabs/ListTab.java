@@ -19,7 +19,6 @@ import com.example.UTN.src.Interfaces.TabInterface;
 public class ListTab extends Fragment implements TabInterface {
 
     private ListTabViewModel mViewModel;
-    private static Boolean isLoading = true;
 
     public static ListTab newInstance() {
         return new ListTab();
@@ -31,8 +30,7 @@ public class ListTab extends Fragment implements TabInterface {
         View root = inflater.inflate(R.layout.list_tab_fragment, container, false);
         mViewModel = new ViewModelProvider(this).get(ListTabViewModel.class);
         mViewModel.getProductList().observe(getViewLifecycleOwner(), productList -> {
-            if (productList.size() > 0 && isLoading) {
-                isLoading = false;
+            if (productList.size() > 0 && root.findViewById(R.id.progressBar).getVisibility() == View.VISIBLE) {
                 root.findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
             }
 
