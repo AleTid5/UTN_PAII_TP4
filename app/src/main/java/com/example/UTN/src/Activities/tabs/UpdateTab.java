@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.UTN.R;
 import com.example.UTN.src.Activities.tabs.view_models.UpdateTabViewModel;
+import com.example.UTN.src.Activities.tabs.view_models.WithCategoryViewModel;
 import com.example.UTN.src.Builders.ProductBuilder;
 import com.example.UTN.src.Exceptions.ProductException;
 import com.example.UTN.src.Interfaces.TabInterface;
@@ -69,15 +70,18 @@ public class UpdateTab extends Fragment implements TabInterface {
             }
         });
 
+        WithCategoryViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
+            Spinner spinner = requireView().findViewById(R.id.spinner_category);
+
+            spinner.setAdapter(new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categories));
+        });
+
         return root;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Spinner spinner = requireView().findViewById(R.id.spinner_category);
-
-        spinner.setAdapter(new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, mViewModel.getCategories()));
     }
 
     @Override

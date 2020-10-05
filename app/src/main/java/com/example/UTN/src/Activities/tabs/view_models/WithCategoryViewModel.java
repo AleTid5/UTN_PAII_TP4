@@ -1,26 +1,42 @@
 package com.example.UTN.src.Activities.tabs.view_models;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.UTN.src.Models.Category;
 import com.example.UTN.src.Services.CategoryService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class WithCategoryViewModel extends ViewModel {
-    private static List<Category> categories = null;
+    private static MutableLiveData<List<Category>> liveCategories = new MutableLiveData<>();
 
-    public List<Category> getCategories() {
-        // Singleton
-        if (categories == null) {
-            categories = CategoryService.findCategories();
-        }
+    static {
+        liveCategories.setValue(new ArrayList<Category>(){{
+            add(new Category(0, "Seleccione una categoria"));
+        }});
 
-        return categories;
+        CategoryService.findCategories();
+    }
+
+    public static LiveData<List<Category>> getCategories() {
+        return liveCategories;
     }
 
     public Integer getCategoryIndex(Category category) {
-        return categories.stream().map(Category::getId).collect(Collectors.toList()).indexOf(category.getId());
+        return Objects.requireNonNull(liveCategories.getValue())
+                .stream().map(Category::getId)
+                .collect(Collectors.toList()).indexOf(category.getId());
+    }
+
+    public static void addCategory(Category category) {
+        try {
+            Objects.requireNonNull(liveCategories.getValue()).add(category);
+            liveCategories.postValue(liveCategories.getValue());
+        } catch (Exception ignored) {}
     }
 }
