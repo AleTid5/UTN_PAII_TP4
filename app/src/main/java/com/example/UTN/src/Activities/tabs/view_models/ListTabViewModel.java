@@ -42,6 +42,7 @@ public class ListTabViewModel extends ViewModel {
 
     public static void updateProduct(Product product) {
         List<Product> products = Objects.requireNonNull(liveProductList.getValue());
+        // [{Product: {id: 1, name: "algo"}}] => [1, 2, 32, 12, 43]
         int productIndex = products.stream().map(Product::getId).collect(Collectors.toList()).indexOf(product.getId());
         products.set(productIndex, product);
         liveProductList.postValue(liveProductList.getValue());

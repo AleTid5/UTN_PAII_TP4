@@ -135,7 +135,7 @@ public class UpdateTab extends Fragment implements TabInterface {
     }
 
     private void setLoader(View view, Boolean isEditable) {
-        ((TextView) view.findViewById(R.id.input_id)).setEnabled(isEditable);
+        view.findViewById(R.id.input_id).setEnabled(isEditable);
 
         if (isEditable) {
             ((Button) view.findViewById(R.id.button_search)).setText(R.string.text_search);
