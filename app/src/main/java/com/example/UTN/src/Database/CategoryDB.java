@@ -3,8 +3,6 @@ package com.example.UTN.src.Database;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.example.UTN.src.Activities.tabs.view_models.AddTabViewModel;
-import com.example.UTN.src.Activities.tabs.view_models.UpdateTabViewModel;
 import com.example.UTN.src.Activities.tabs.view_models.WithCategoryViewModel;
 import com.example.UTN.src.Models.Category;
 

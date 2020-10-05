@@ -60,7 +60,7 @@ public class UpdateTab extends Fragment implements TabInterface {
 
                 isEditable = true;
             } catch (ProductException e) {
-                Snackbar.make(root, e.getMessage(), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(root, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_LONG).show();
             } catch (Exception e) {
                 Snackbar.make(root, "El ID ingresado no pertenece a ningún producto.", Snackbar.LENGTH_LONG).show();
                 e.printStackTrace();
